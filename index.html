@@ -4,13 +4,15 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>GIFtastic</title>
+    <title>Train Scheduler</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--Reset style-->
     <link rel="stylesheet" type="text/css" media="screen" href="../Train-Scheduler-Basic/assets/css/reset.css" />
     <!--Bootstrap-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
+    <!-- Firebase Reference -->
+    <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
     <!-- My own CSS stylesheet -->
     <link rel="stylesheet" type="text/css" media="screen" href="../Train-Scheduler-Basic/assets/css/stylesheet.css">
     <!--JavaScript-->
@@ -18,7 +20,57 @@
 </head>
 
 <body>
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4 text-center">Train Scheduler</h1>
+            <p class="lead text-center">Choo Choo mother f'er.</p>
+        </div>
+    </div>
+    <div class="border border-primary mx-2">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col1">Train Name</th>
+                <th scope="col2">Destination</th>
+                <th scope="col3">Frequency (min)</th>
+                <th scope="col4">Next Arrival</th>
+                <th scope="col5">Minutes Away</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">Train 1</th>
+                <td>Vegas</td>
+                <td>60</td>
+                <td>2pm</td>
+                <td>30</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<br>
+<div class="border border-primary mx-2">
+    <form>
+        <div class="form-group mx-2">
+            <label for="trainName">Train Name</label>
+            <input type="name" class="form-control" id="trainName" aria-describedby="trainName" placeholder="Train Name">
+        </div>
+        <div class="form-group mx-2">
+            <label for="destinationName">Destination</label>
+            <input type="destination" class="form-control" id="destinationName" placeholder="Destination">
+        </div>
+        <div class="form-group mx-2">
+            <label for="trainArrivalTime">First Train Time (HH:MM military time)</label>
+            <input type="arrivalTime" class="form-control" id="trainArrivalTime" placeholder="Arrival Time">
+        </div>
+        <div class="form-group mx-2">
+            <label for="frequencyTime">Frequency (min)</label>
+            <input type="frequency" class="form-control" id="frequencyTime" placeholder="Frequency">
+        </div>
 
+        <button type="submit" id="submit" class="btn btn-primary ml-3">Submit</button>
+    </form>
+    </div>
 
 
 

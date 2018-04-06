@@ -1,7 +1,8 @@
 # Train-Scheduler-Basic
 Setup
 We'll leave that up to you -- however you like. Just make sure you're using Firebase to store data, GitHub to backup your project, and GitHub Pages to host your finished site.
-Instructions
+
+Instructions:
 Make sure that your app suits this basic spec:
 
 When adding trains, administrators should be able to submit the following:
