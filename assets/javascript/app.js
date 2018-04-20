@@ -16,6 +16,7 @@ window.onload = function () {
     //global values
     var trainName = "";
     var destination = "";
+    var time = "";
     var frequency = 0;
     var nextArrival = 0;
     var minutesAway = 0;
@@ -24,31 +25,32 @@ window.onload = function () {
         var newRow = $('<tr>');
         var newTrainName = $("<td>").text(name);
         var newDestination = $("<td>").text(destination);
+        var newTime = $("<td>").text(time);
         var newFrequency = $("<td>").text(frequency);
-        var newNextArrival = $("<td>").text(time);
 
         newRow.append(newTrainName);
         newRow.append(newDestination);
         newRow.append(newFrequency);
-        newRow.append(newNextArrival);
+        newRow.append(newTime);
 
         $("#newTrains").append(newRow);
     }
-   
+
     $("#submit").on("click", function (event) {
         event.preventDefault();
 
         var trainName = $("#trainName").val().trim();
         var destination = $("#destinationName").val().trim();
+        var time = parseInt($("#trainArrivalTime").val().trim());
         var frequency = parseInt($("#frequencyTime").val().trim());
-        var nextArrival = parseInt($("#trainArrivalTime").val().trim());
-       
+
+
         //code for handling the push
         database.ref().push({
             trainName: trainName,
             destination: destination,
+            time: time,
             frequency: frequency,
-            nextArrival: nextArrival,
             dateAdded: firebase.database.ServerValue.TIMESTAMP
         });
         console.log("New train: " + trainName);
@@ -58,28 +60,28 @@ window.onload = function () {
         console.log("New minutes away: " + minutesAway);
     });
 
-        // At the initial load and subsequent value changes, get a snapshot of the stored data.
+    // At the initial load and subsequent value changes, get a snapshot of the stored data.
     // This function allows you to update your page in real-time when the firebase database changes.
-    
-    database.ref().on("value", function (snapshot) {
+
+    database.ref().on("child_added", function (childSnapshot) {
         //if (snapshot.child("trainName").exists() && snapshot.child("destination").exists() && snapshot.child("frequency").exists() && snapshot.child("nextArrival").exists() && snapshot.child("minutesAway").exists()) {
-            trainName = snapshot.val().trainName;
-            destination = snapshot.val().destination;
-            frequency = parseInt(snapshot.val().frequency);
-            nextArrival = parseInt(snapshot.val().nextArrival);
-            minutesAway = parseInt(snapshot.val().minutesAway);
+        var dbTrainName = childSnapshot.val().trainName;
+        var dbDestination = childSnapshot.val().destination;
+        var dbTime = childSnapshot.val().time;
+        var dbFrequency = childSnapshot.val().frequency;
+ 
 
-            newTrain(name, destination, frequency, time);
-    
-        console.log("train name: " + trainName);
-        console.log("destination: " + destination);
-        console.log("Frequency: " + frequency);
-        console.log("Arrival: " + nextArrival);
-        console.log("Minutes away: " + minutesAway);
+    newTrain(dbTrainName, dbDestination, dbFrequency, dbTime);
 
-    }, function (errorObject) {
-        console.log("The read failed: " + errorObject.code);
-    });
+    console.log("train name: " + trainName);
+    console.log("destination: " + destination);
+    console.log("Frequency: " + frequency);
+    console.log("Arrival: " + nextArrival);
+    console.log("Minutes away: " + minutesAway);
+
+}, function (errorObject) {
+    console.log("The read failed: " + errorObject.code);
+});
 
 
     /*
